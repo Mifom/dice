@@ -17,10 +17,16 @@ fn main() {
                 if rest.is_empty() {
                     println!("{} => {}", roll, roll.roll());
                 } else {
-                    eprintln!("Result is `{roll}` but tail is `{rest}`")
+                    eprintln!("Stopped parsing at `{rest}`")
                 }
             }
-            Err(e) => eprintln!("Parse error: {e:?}"),
+            Err(e) => {
+                eprintln!(
+                    "Stopped parsing at `{}`.\nParsing failed when trying to parse {}",
+                    e.input,
+                    e.code.description()
+                );
+            }
         }
     }
 }

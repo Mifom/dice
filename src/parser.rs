@@ -7,7 +7,7 @@ use nom::{
     error::ParseError,
     multi::many_m_n,
     sequence::{delimited, pair, tuple},
-    IResult,
+    Finish, IResult,
 };
 
 use crate::roll::Roll;
@@ -39,8 +39,8 @@ fn sum(input: &str) -> IResult<&str, Roll> {
     Ok((rest, Roll::Sum(Box::new(left), Box::new(right))))
 }
 
-pub fn roll(input: &str) -> IResult<&str, Roll> {
-    alt((sum, dices))(input)
+pub fn roll(input: &str) -> Result<(&str, Roll), nom::error::Error<&str>> {
+    alt((sum, dices))(input).finish()
 }
 
 #[cfg(test)]
