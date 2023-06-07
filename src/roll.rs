@@ -23,7 +23,11 @@ impl Roll {
                 right.roll_inner(rng, results);
             }
             Roll::Dices { mul, max } => {
-                results.push((0..*mul).map(|_| rng.gen_range(1..=*max)).collect())
+                if *max == 1 {
+                    results.push(vec![*mul]);
+                } else {
+                    results.push((0..*mul).map(|_| rng.gen_range(1..=*max)).collect())
+                }
             }
         }
     }
@@ -38,7 +42,11 @@ impl std::fmt::Display for Roll {
                 r.fmt(f)
             }
             Roll::Dices { mul, max } => {
-                write!(f, "{mul}d{max}")
+                if *max == 1 {
+                    write!(f, "{mul}")
+                } else {
+                    write!(f, "{mul}d{max}")
+                }
             }
         }
     }
