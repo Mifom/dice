@@ -15,7 +15,8 @@ fn main() {
         match roll(&line) {
             Ok((rest, roll)) => {
                 if rest.is_empty() {
-                    println!("{} => {}", roll, roll.roll());
+                    let result = roll.roll();
+                    println!("{} => {} => {}", roll, result, result.calc());
                 } else {
                     eprintln!("Stopped parsing at `{rest}`")
                 }
